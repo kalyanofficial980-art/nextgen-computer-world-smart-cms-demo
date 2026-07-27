@@ -11,6 +11,8 @@ import { whatsappUrl } from "@/lib/site";
 const links = [
   ["Home", "/"],
   ["Catalogue", "/catalogue"],
+  ["Offers", "/offers"],
+  ["Reviews", "/reviews"],
   ["Compare", "/compare"],
   ["Services", "/services"],
   ["Contact", "/contact"],

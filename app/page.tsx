@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@/components/icon";
+import { OfferCard } from "@/components/offer-card";
 import { ProductCard } from "@/components/product-card";
+import { ReviewCard } from "@/components/review-card";
+import { getActiveOffers, getPublishedReviews } from "@/lib/marketing-repository";
 import { productRepository } from "@/lib/product-repository";
 import { getSiteSettings, whatsappUrl } from "@/lib/site";
 
@@ -15,9 +18,11 @@ const services = [
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [products, settings] = await Promise.all([
+  const [products, settings, offers, reviews] = await Promise.all([
     productRepository.list(),
     getSiteSettings(),
+    getActiveOffers(3),
+    getPublishedReviews(3),
   ]);
   const categories = [...new Set(products.map((product) => product.category))].sort();
   const featured = products.filter((product) => product.featured).slice(0, 6);
@@ -169,6 +174,58 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {offers.length > 0 && (
+        <section className="border-y border-slate-800 bg-[#07111f] px-4 py-20">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div className="max-w-2xl">
+                <span className="text-xs font-black tracking-[0.15em] text-cyan-300 uppercase">
+                  Current offers
+                </span>
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
+                  Useful offers with clear next steps.
+                </h2>
+              </div>
+              <Link href="/offers" className="font-bold text-cyan-300">
+                View all offers →
+              </Link>
+            </div>
+
+            <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {offers.map((offer) => (
+                <OfferCard key={offer.id} offer={offer} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {reviews.length > 0 && (
+        <section className="px-4 py-20">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div className="max-w-2xl">
+                <span className="text-xs font-black tracking-[0.15em] text-cyan-300 uppercase">
+                  Customer reviews
+                </span>
+                <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
+                  Published customer feedback.
+                </h2>
+              </div>
+              <Link href="/reviews" className="font-bold text-cyan-300">
+                View all reviews →
+              </Link>
+            </div>
+
+            <div className="mt-9 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-[#07111f] px-4 py-20">
         <div className="mx-auto max-w-[1180px]">

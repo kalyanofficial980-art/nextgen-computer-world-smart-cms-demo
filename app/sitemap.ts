@@ -1,9 +1,22 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/lib/products";
+import { productRepository } from "@/lib/product-repository";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const staticRoutes = ["", "/catalogue", "/compare", "/services", "/contact", "/admin-preview"];
+  const products = await productRepository.list();
+  const staticRoutes = [
+    "",
+    "/catalogue",
+    "/offers",
+    "/reviews",
+    "/compare",
+    "/services",
+    "/contact",
+    "/privacy",
+    "/terms",
+  ];
 
   return [
     ...staticRoutes.map((route) => ({

@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { BrandingCms } from "@/components/branding-cms";
+import { MarketingCms } from "@/components/marketing-cms";
 import { Icon } from "@/components/icon";
 import { createClient } from "@/lib/supabase/client";
 
@@ -143,7 +144,7 @@ function storagePathFromUrl(url: string) {
 export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
-  const [tab, setTab] = useState<"products" | "enquiries" | "branding">("products");
+  const [tab, setTab] = useState<"products" | "enquiries" | "branding" | "offers" | "reviews">("products");
   const [products, setProducts] = useState<ProductRow[]>([]);
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [form, setForm] = useState<ProductForm>(blankProduct);
@@ -447,11 +448,13 @@ export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
         ))}
       </div>
 
-      <div className="mt-6 grid gap-2 rounded-2xl border border-slate-700 bg-slate-950/45 p-1 md:grid-cols-3">
+      <div className="mt-6 grid gap-2 rounded-2xl border border-slate-700 bg-slate-950/45 p-1 sm:grid-cols-2 xl:grid-cols-5">
         {([
-          ["products", "Product management"],
-          ["enquiries", "Enquiry management"],
+          ["products", "Products"],
+          ["enquiries", "Enquiries"],
           ["branding", "Branding & homepage"],
+          ["offers", "Offers"],
+          ["reviews", "Reviews"],
         ] as const).map(([value, label]) => (
           <button
             key={value}
@@ -979,9 +982,17 @@ export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
             )}
           </div>
         </div>
-      ) : (
+      ) : tab === "branding" ? (
         <div className="mt-5">
           <BrandingCms />
+        </div>
+      ) : tab === "offers" ? (
+        <div className="mt-5">
+          <MarketingCms section="offers" />
+        </div>
+      ) : (
+        <div className="mt-5">
+          <MarketingCms section="reviews" />
         </div>
       )}
     </div>

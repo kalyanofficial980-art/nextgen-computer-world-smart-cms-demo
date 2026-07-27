@@ -103,6 +103,8 @@ export function SiteFooter() {
             <h3 className="font-black text-white">Explore</h3>
             <div className="mt-4 grid gap-2 text-slate-500">
               <Link href="/catalogue">Catalogue</Link>
+              <Link href="/offers">Offers</Link>
+              <Link href="/reviews">Reviews</Link>
               <Link href="/compare">Compare</Link>
               <Link href="/services">Services</Link>
               <Link href="/contact">Contact</Link>
