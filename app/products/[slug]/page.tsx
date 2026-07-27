@@ -72,8 +72,8 @@ export default async function ProductPage({
               ))}
             </div>
             <div className="surface mt-6 rounded-3xl p-6">
-              <span className="text-xs text-slate-500 uppercase">Demo starting price</span>
-              <strong className="mt-1 block text-4xl font-black text-white">₹{product.price.toLocaleString("en-IN")}*</strong>
+              <span className="text-xs text-slate-500 uppercase">Starting price</span>
+              <strong className="mt-1 block text-4xl font-black text-white">₹{product.price.toLocaleString("en-IN")}</strong>
               <p className="mt-2 text-xs text-slate-500">Confirm exact configuration, availability and final price with the store.</p>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">

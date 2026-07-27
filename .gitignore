@@ -12,3 +12,5 @@ npm-audit*.json
 CLIENT-READY-DEMO.txt
 FULL-CMS-LIVE-URL.txt
 LIVE-URL.txt
+.vercel
+.env*
