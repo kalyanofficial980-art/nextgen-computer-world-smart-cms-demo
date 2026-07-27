@@ -10,12 +10,16 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=24.0.0"
+    "node": "24.x"
   },
   "dependencies": {
     "next": "16.2.11",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "@supabase/ssr": "0.12.3",
+    "@supabase/supabase-js": "2.110.8",
+    "zod": "4.4.3",
+    "sharp": "0.35.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.0",
@@ -24,8 +28,12 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.2.11",
-    "postcss": "^8.0.0",
     "tailwindcss": "4.3.0",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "postcss": "8.5.23"
+  },
+  "overrides": {
+    "sharp": "0.35.3",
+    "postcss": "8.5.23"
   }
 }

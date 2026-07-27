@@ -1,70 +1,43 @@
-# NextGen Computer World — Smart Catalogue CMS Demo
+# NextGen Computer World — Full Smart Catalogue CMS
 
-An advanced Kalyan Web Studio portfolio demo for the ₹15,000 Founder Launch Offer, with a regular KWS price of ₹25,000.
+A complete Kalyan Web Studio portfolio demo positioned at:
 
-## Current Status
-Phase 1 public website: complete.
-
-Phase 2 Supabase CMS: planned and structurally prepared, but not connected yet.
+- Regular KWS price: ₹25,000
+- Founder launch offer: ₹15,000 for the first 3 clients
 
 ## Technology
-- Next.js 16 App Router
-- React 19
+- Next.js 16.2.11 App Router
+- React 19.2
 - TypeScript
 - Tailwind CSS 4
-- Node.js runtime through Next.js
-- Vercel-ready
-- Supabase-ready repository architecture
+- Node.js 24.x
+- Supabase Postgres
+- Supabase Auth
+- Supabase Storage
+- Row Level Security
+- Vercel
 
-A separate Express server is intentionally not added. Next.js already provides server rendering, Route Handlers and server-side execution on Node.js. Adding Express only for marketing would increase complexity without helping this project.
+## Public Website
+- 30 products
+- Search and filters
+- Product details
+- Comparison
+- WhatsApp enquiries
+- Repair, exchange and custom-PC forms
+
+## Owner CMS
+- Protected owner login
+- Add, edit and delete products
+- Image uploads
+- Price and stock management
+- Publish/draft controls
+- Featured products
+- Enquiry records and statuses
 
 ## Local Setup
+Run the provided upgrade script. It configures Supabase, migrations, owner account, Vercel variables, build checks and deployment.
 
-```powershell
-npm install
-npm run dev
-```
-
-Open:
-
-```text
-http://localhost:3000
-```
-
-## Quality Checks
-
-```powershell
-npm run typecheck
-npm run lint
-npm run build
-```
-
-## Deployment
-
-Run:
-
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass -Force
-.\DEPLOY-GITHUB-VERCEL.ps1
-```
-
-## Contact Configuration
-Edit:
-
-```text
-lib/site.ts
-```
-
-Current demo details:
+## Contact
 - Phone and WhatsApp: +91 83285 71256
 - Email: kalayanofficial980@gmail.com
 - Location: Nellore City, Andhra Pradesh
-
-## Product Data
-Edit:
-
-```text
-lib/products.ts
-```
-
-In Phase 2, the product repository will move to Supabase.

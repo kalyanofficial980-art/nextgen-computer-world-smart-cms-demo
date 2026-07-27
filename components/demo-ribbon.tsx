@@ -8,12 +8,12 @@ export function DemoRibbon() {
       Regular KWS price {siteConfig.regularPrice}
       <span className="mx-2">•</span>
       <strong className="text-emerald-300">
-        Founder launch offer {siteConfig.founderPrice}
+        Founder launch offer {siteConfig.founderPrice} • first 3 clients
       </strong>
       <span className="mx-2">•</span>
-      Public website ready
+      30 initial products
       <span className="mx-2">•</span>
-      Supabase CMS connection is Phase 2
+      Secure owner dashboard
     </div>
   );
 }

@@ -2,6 +2,7 @@ export type StockStatus = "In Stock" | "Out of Stock" | "Coming Soon" | "Sold";
 export type ProductCondition = "New" | "Like New" | "Excellent" | "Good";
 
 export type Product = {
+  id?: string;
   slug: string;
   name: string;
   category: string;

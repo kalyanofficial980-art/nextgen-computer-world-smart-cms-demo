@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Search, filter, compare and enquire about laptops, desktops, custom PCs, printers, networking products and accessories.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function CataloguePage() {
   const products = await productRepository.list();
 

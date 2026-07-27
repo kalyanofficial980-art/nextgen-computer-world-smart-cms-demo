@@ -1,0 +1,13 @@
+NEXTGEN COMPUTER WORLD SMART CMS DEMO
+
+Live Website:
+https://nextgen-computer-world-smart-cms-demo-3v5q1l21i.vercel.app
+
+GitHub:
+https://github.com/kalyanofficial980-art/nextgen-computer-world-smart-cms-demo
+
+Phase 1:
+Public Next.js website complete
+
+Phase 2:
+Supabase CMS connection pending

@@ -12,7 +12,7 @@ const links = [
   ["Catalogue", "/catalogue"],
   ["Compare", "/compare"],
   ["Services", "/services"],
-  ["CMS Preview", "/admin-preview"],
+  ["Owner CMS", "/admin"],
   ["Contact", "/contact"],
 ] as const;
 

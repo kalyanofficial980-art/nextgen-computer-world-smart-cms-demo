@@ -1,52 +1,45 @@
-# Smart Catalogue CMS — Pricing Position
+# Smart Catalogue CMS — Final Demo Scope
 
-## Regular KWS Price
+## KWS Regular Price
 ₹25,000
 
 ## Founder Launch Offer
-₹15,000
+₹15,000 — first 3 clients only
 
-Use the launch offer honestly for a limited number of early clients. Do not call the crossed price a fixed “market price.”
+This is Kalyan Web Studio's own pricing position, not a claimed fixed market price.
 
-## Phase 1 — Public Website Included in This Build
+## Included
 - Next.js App Router
 - React
 - TypeScript
 - Tailwind CSS
 - Node.js runtime through Next.js
-- 30 sample catalogue products
-- Product-detail routes
+- Supabase Postgres
+- Supabase Auth owner login
+- Supabase Storage product images
+- Row Level Security
+- 30 initial products
 - Search and advanced filters
+- Product-detail routes
 - Compare up to three products
 - Product-specific WhatsApp enquiries
 - Repair, exchange, custom-PC and general enquiry forms
-- Contact, phone, email and Maps actions
+- Enquiry records and lead-status management
+- Product add, edit and delete
+- Price, specifications, warranty and stock updates
+- Publish/draft and featured-product controls
 - Responsive design
-- Dynamic metadata, sitemap, robots and social-sharing image
-- CMS interface preview
-- Repository architecture prepared for Supabase
-
-## Phase 2 — Supabase CMS To Be Connected Next
-- Supabase Auth owner login
-- Protected admin routes
-- Postgres product tables
-- Add, edit and delete products
-- Product-image upload through Supabase Storage
-- Price, specification, condition, warranty and stock updates
-- Categories and featured-product management
-- Offers, banners and business-details management
-- Product and service enquiry records
-- Row Level Security
-- Export and backup workflow
+- Metadata, sitemap, robots and social-sharing image
+- GitHub and Vercel deployment
 - Owner training
 
-## Not Included at ₹15,000 Unless Added to the Written Scope
-- Online payments
+## Not Included
+- Online payment gateway
 - Customer accounts
-- Shopping cart
+- Shopping cart and checkout
+- GST invoice generation
 - Delivery tracking
-- GST invoicing
 - Supplier inventory synchronisation
-- Multiple complex staff roles
-- Custom mobile application
-- Paid services, domain, hosting or database overage
+- Multiple advanced staff roles
+- Native mobile application
+- Domain, paid hosting, paid APIs or Supabase overage

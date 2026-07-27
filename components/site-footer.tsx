@@ -65,7 +65,7 @@ export function SiteFooter() {
               <Link href="/catalogue">Catalogue</Link>
               <Link href="/compare">Compare</Link>
               <Link href="/services">Services</Link>
-              <Link href="/admin-preview">CMS Preview</Link>
+              <Link href="/admin">Owner CMS</Link>
             </div>
           </div>
 

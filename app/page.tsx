@@ -2,24 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { ProductCard } from "@/components/product-card";
-import { categories, products } from "@/lib/products";
+import { productRepository } from "@/lib/product-repository";
 import { siteConfig, whatsappUrl } from "@/lib/site";
 
 const capabilities = [
   ["30", "Initial catalogue products"],
   ["8", "Product categories"],
   ["3", "Products compared together"],
-  ["CMS", "Supabase-ready Phase 2 architecture"],
+  ["CMS", "Secure owner catalogue management"],
 ];
 
 const cmsFeatures = [
-  ["database", "Supabase-ready data layer", "Typed repository boundary prepared for a database-backed implementation."],
-  ["shield", "Secure admin direction", "Phase 2 plan includes Supabase Auth, protected admin routes and Row Level Security."],
-  ["edit", "Product management", "Add, edit, delete, feature and update products from the future owner dashboard."],
-  ["upload", "Image workflow", "Supabase Storage plan for organised product-image uploads and replacement."],
+  ["database", "Supabase data layer", "Postgres catalogue data connected through a typed repository."],
+  ["shield", "Secure owner access", "Supabase Auth, protected admin routes and Row Level Security protect management actions."],
+  ["edit", "Product management", "Add, edit, delete, publish, feature and update products from the owner dashboard."],
+  ["upload", "Image workflow", "Supabase Storage handles organised product-image uploads and replacement."],
 ];
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const products = await productRepository.list();
+  const categories = [...new Set(products.map((product) => product.category))].sort();
   const featured = products.filter((product) => product.featured).slice(0, 6);
 
   return (
@@ -36,7 +40,7 @@ export default function HomePage() {
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-slate-400">
               Advanced public catalogue, product comparison, structured enquiries and
-              a CMS-ready architecture for computer, laptop, printer and networking
+              a Secure owner dashboard for computer, laptop, printer and networking
               stores.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -48,7 +52,7 @@ export default function HomePage() {
                 <Icon name="arrow" />
               </Link>
               <Link
-                href="/admin-preview"
+                href="/admin"
                 className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/55 px-5 font-black text-white"
               >
                 Preview CMS Interface
@@ -65,7 +69,7 @@ export default function HomePage() {
               </span>
               <span className="flex items-center gap-2">
                 <Icon name="check" className="size-4 text-emerald-300" />
-                CMS-ready architecture
+                Secure owner dashboard
               </span>
             </div>
           </div>
@@ -90,7 +94,7 @@ export default function HomePage() {
                 {[
                   ["30", "Products"],
                   ["8", "Categories"],
-                  ["Phase 2", "CMS"],
+                  ["Live", "CMS"],
                 ].map(([value, label]) => (
                   <div
                     key={label}
@@ -113,7 +117,7 @@ export default function HomePage() {
             </div>
 
             <div className="surface absolute bottom-0 left-0 rounded-2xl p-4">
-              <strong className="block text-sm text-white">Supabase Phase 2</strong>
+              <strong className="block text-sm text-white">Supabase Backend</strong>
               <span className="mt-1 block text-xs text-slate-500">
                 Auth • Database • Storage
               </span>
@@ -179,8 +183,8 @@ export default function HomePage() {
               Product cards built for enquiry and comparison.
             </h2>
             <p className="mt-5 text-slate-400">
-              Sample products demonstrate the public customer experience before the
-              Supabase CMS is connected.
+              Sample products demonstrate the public customer experience while the
+              owner dashboard manages the connected catalogue.
             </p>
           </div>
 
@@ -196,22 +200,22 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1180px] gap-12 lg:grid-cols-[.9fr_1.1fr]">
           <div>
             <span className="text-xs font-black tracking-[0.15em] text-cyan-300 uppercase">
-              Phase 2 Foundation
+              Owner Management
             </span>
             <h2 className="mt-4 text-balance text-4xl font-black tracking-[-0.045em] text-white sm:text-6xl">
-              Prepared for a secure Supabase CMS.
+              Built around a secure Supabase CMS.
             </h2>
             <p className="mt-5 text-slate-400">
-              The public website uses a typed repository boundary. In Phase 2, the
-              local product repository will be replaced with Supabase without
-              rebuilding the entire frontend.
+              The public catalogue and protected owner dashboard share one structured
+              product system. Owners can manage products, prices, stock and images
+              after signing in.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 href="/admin-preview"
                 className="focus-ring inline-flex min-h-12 items-center rounded-xl bg-cyan-300 px-5 font-black text-slate-950"
               >
-                See CMS UI Preview
+                Open Owner Dashboard
               </Link>
               <a
                 href={whatsappUrl(

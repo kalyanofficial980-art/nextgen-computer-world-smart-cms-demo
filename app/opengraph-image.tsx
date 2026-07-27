@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 export const alt = "NextGen Computer World Smart Catalogue CMS Demo";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -25,7 +24,7 @@ export default function OpenGraphImage() {
         <div style={{ color: "#67e8f9", fontSize: 26, fontWeight: 800 }}>
           SMART CATALOGUE CMS DEMO
         </div>
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 76, fontWeight: 900, lineHeight: 1 }}>
             NextGen Computer World
           </div>

@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icon";
-import { products } from "@/lib/products";
 import { siteConfig, whatsappUrl } from "@/lib/site";
+import type { Product } from "@/lib/types";
 
-export function CompareClient() {
+export function CompareClient({ products }: { products: Product[] }) {
   const searchParams = useSearchParams();
   const requested = (searchParams.get("ids") ?? "")
     .split(",")
@@ -17,7 +17,7 @@ export function CompareClient() {
     requested.length >= 2
       ? requested
           .map((slug) => products.find((product) => product.slug === slug))
-          .filter((product) => product !== undefined)
+          .filter((product): product is Product => Boolean(product))
       : products.slice(0, 3);
 
   const fields = [
@@ -33,7 +33,7 @@ export function CompareClient() {
 
   return (
     <div className="overflow-x-auto rounded-3xl border border-slate-700">
-      <table className="min-w-[820px] w-full border-collapse text-left">
+      <table className="w-full min-w-[820px] border-collapse text-left">
         <thead>
           <tr className="bg-slate-950/60">
             <th className="border-r border-slate-700 p-4 text-sm text-slate-400">
@@ -89,10 +89,7 @@ export function CompareClient() {
               Enquiry
             </th>
             {selected.map((product) => (
-              <td
-                key={product.slug}
-                className="border-r border-slate-700 p-4 last:border-r-0"
-              >
+              <td key={product.slug} className="border-r border-slate-700 p-4 last:border-r-0">
                 <a
                   href={whatsappUrl(
                     `Hello ${siteConfig.name}, I compared ${selected

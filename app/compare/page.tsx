@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { CompareClient } from "@/components/compare-client";
+import { productRepository } from "@/lib/product-repository";
 
 export const metadata: Metadata = {
   title: "Compare Products",
   description: "Compare product specifications side by side.",
 };
 
-export default function ComparePage() {
+export const dynamic = "force-dynamic";
+
+export default async function ComparePage() {
+  const products = await productRepository.list();
   return (
     <section className="px-4 py-20">
       <div className="mx-auto max-w-[1180px]">
@@ -32,7 +36,7 @@ export default function ComparePage() {
               </div>
             }
           >
-            <CompareClient />
+            <CompareClient products={products} />
           </Suspense>
         </div>
       </div>
