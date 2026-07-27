@@ -5,7 +5,7 @@ import { Icon } from "@/components/icon";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Laptop repair, desktop support, custom PC, networking, exchange and structured WhatsApp enquiry services.",
+    "Laptop repair, desktop support, upgrades, networking and custom PC planning in Nellore.",
 };
 
 const services = [
@@ -15,23 +15,22 @@ const services = [
   ["database", "Data Recovery Assessment", "Initial evaluation for storage and deleted-data recovery requirements."],
   ["shield", "Networking Setup", "Router setup, Wi-Fi improvement and small-office networking."],
   ["users", "Custom PC Planning", "Configurations for gaming, editing, business and professional workloads."],
-];
+] as const;
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="px-4 py-20">
+      <section className="px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-[1180px]">
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-xs font-black tracking-[0.15em] text-cyan-300 uppercase">
               Technology Services
             </span>
-            <h1 className="mt-4 text-balance text-5xl font-black tracking-[-0.055em] text-white sm:text-7xl">
-              Product sales supported by practical technical services.
+            <h1 className="mt-4 text-balance text-4xl font-black tracking-[-0.05em] text-white sm:text-6xl">
+              Practical support for computers and networks.
             </h1>
             <p className="mt-5 text-lg text-slate-400">
-              Structured enquiry experiences help customers explain the requirement
-              before the store follows up.
+              Tell us what you need. We will review the requirement and contact you with the next step.
             </p>
           </div>
 
@@ -51,12 +50,9 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-[#07111f] px-4 py-20">
-        <div className="mx-auto grid max-w-[1180px] gap-6 lg:grid-cols-2">
-          <EnquiryForm title="Repair Booking" type="repair" />
-          <EnquiryForm title="Custom PC Requirement" type="custom PC" />
-          <EnquiryForm title="Laptop Exchange Enquiry" type="exchange" />
-          <EnquiryForm title="General Product Enquiry" type="general" />
+      <section className="bg-[#07111f] px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl">
+          <EnquiryForm title="Service or product enquiry" type="general" />
         </div>
       </section>
     </>

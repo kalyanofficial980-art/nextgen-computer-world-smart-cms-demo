@@ -89,9 +89,9 @@ export function ProductCard({
         )}
 
         <div className="mt-auto pt-5">
-          <p className="text-[10px] text-slate-500 uppercase">Demo starting price</p>
+          <p className="text-[10px] text-slate-500 uppercase">Starting price</p>
           <strong className="mt-1 block text-2xl font-black text-white">
-            ₹{product.price.toLocaleString("en-IN")}*
+            ₹{product.price.toLocaleString("en-IN")}
           </strong>
 
           <div className="mt-4 grid grid-cols-2 gap-2">

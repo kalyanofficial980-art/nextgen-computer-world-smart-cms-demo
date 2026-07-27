@@ -1,23 +1,31 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { siteConfig, whatsappUrl } from "@/lib/site";
 
 export function SiteFooter() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin") || pathname.startsWith("/auth")) {
+    return null;
+  }
+
   return (
     <>
-      <section className="bg-gradient-to-r from-cyan-700 via-blue-600 to-indigo-700 px-4 py-20">
+      <section className="bg-gradient-to-r from-cyan-700 via-blue-600 to-indigo-700 px-4 py-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-black tracking-[0.16em] text-cyan-100 uppercase">
             Product Guidance
           </p>
-          <h2 className="mt-4 text-balance text-4xl font-black tracking-[-0.045em] text-white sm:text-6xl">
-            Find the right product without the confusion.
+          <h2 className="mt-4 text-balance text-3xl font-black tracking-[-0.04em] text-white sm:text-5xl">
+            Need help choosing the right system?
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-blue-100">
-            Share your budget, intended use and preferred specifications. Receive a
-            clear shortlist through WhatsApp.
+          <p className="mx-auto mt-4 max-w-2xl text-blue-100">
+            Share your budget and intended use. We will help you shortlist suitable options.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <a
               href={whatsappUrl(
                 `Hello ${siteConfig.name}, please help me choose a suitable product. My budget and intended use are:`,
@@ -27,19 +35,19 @@ export function SiteFooter() {
               className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-400 px-5 font-black text-emerald-950"
             >
               <Icon name="whatsapp" />
-              Get a Recommendation
+              Get a recommendation
             </a>
             <Link
               href="/catalogue"
               className="focus-ring inline-flex min-h-12 items-center rounded-xl bg-slate-950 px-5 font-black text-white"
             >
-              Browse Catalogue
+              Browse catalogue
             </Link>
           </div>
         </div>
       </section>
 
-      <footer className="bg-[#02070d] px-4 py-14 text-sm">
+      <footer className="bg-[#02070d] px-4 py-12 text-sm">
         <div className="mx-auto grid max-w-[1180px] gap-10 md:grid-cols-[1.25fr_.75fr_.75fr]">
           <div>
             <div className="flex items-center gap-3">
@@ -48,14 +56,11 @@ export function SiteFooter() {
               </span>
               <div>
                 <strong className="block text-white">{siteConfig.name}</strong>
-                <span className="text-xs text-slate-500">
-                  Smart catalogue and CMS demo
-                </span>
+                <span className="text-xs text-slate-500">{siteConfig.tagline}</span>
               </div>
             </div>
             <p className="mt-5 max-w-md text-slate-500">
-              A fictional portfolio demonstration created by Kalyan Web Studio.
-              Products, prices, warranties and business details are sample content.
+              Computers, laptops, upgrades, networking products and practical technical support in Nellore.
             </p>
           </div>
 
@@ -65,7 +70,9 @@ export function SiteFooter() {
               <Link href="/catalogue">Catalogue</Link>
               <Link href="/compare">Compare</Link>
               <Link href="/services">Services</Link>
-              <Link href="/admin">Owner CMS</Link>
+              <Link href="/contact">Contact</Link>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
             </div>
           </div>
 
@@ -94,8 +101,8 @@ export function SiteFooter() {
         </div>
 
         <div className="mx-auto mt-10 flex max-w-[1180px] flex-col justify-between gap-3 border-t border-slate-800 pt-6 text-xs text-slate-600 sm:flex-row">
-          <span>© 2026 {siteConfig.name}. Demo content.</span>
-          <span>Website concept by Kalyan Web Studio</span>
+          <span>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</span>
+          <span>Product availability and prices may change. Confirm before purchase.</span>
         </div>
       </footer>
     </>

@@ -1,43 +1,29 @@
-# NextGen Computer World — Full Smart Catalogue CMS
+# NextGen Computer World
 
-A complete Kalyan Web Studio portfolio demo positioned at:
+Production catalogue and owner CMS for products, stock, images and customer enquiries.
 
-- Regular KWS price: ₹25,000
-- Founder launch offer: ₹15,000 for the first 3 clients
+## Commands
 
-## Technology
-- Next.js 16.2.11 App Router
-- React 19.2
+```bash
+npm install
+npm run dev
+npm run typecheck
+npm run lint
+npm run build
+```
+
+## Required environment variables
+
+Copy `.env.example` to `.env.local` and provide the Supabase project values.
+
+`SUPABASE_SECRET_KEY` is server-only. Never expose it in browser code or commit it to Git.
+
+## Deployment checks
+
+- Production dependency audit
 - TypeScript
-- Tailwind CSS 4
-- Node.js 24.x
-- Supabase Postgres
-- Supabase Auth
-- Supabase Storage
-- Row Level Security
-- Vercel
-
-## Public Website
-- 30 products
-- Search and filters
-- Product details
-- Comparison
-- WhatsApp enquiries
-- Repair, exchange and custom-PC forms
-
-## Owner CMS
-- Protected owner login
-- Add, edit and delete products
-- Image uploads
-- Price and stock management
-- Publish/draft controls
-- Featured products
-- Enquiry records and statuses
-
-## Local Setup
-Run the provided upgrade script. It configures Supabase, migrations, owner account, Vercel variables, build checks and deployment.
-
-## Contact
-- Phone and WhatsApp: +91 83285 71256
-- Email: kalayanofficial980@gmail.com
-- Location: Nellore City, Andhra Pradesh
+- ESLint
+- Next.js production build
+- Supabase migration
+- Owner authentication
+- Production smoke tests

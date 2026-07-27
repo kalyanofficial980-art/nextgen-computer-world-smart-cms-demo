@@ -7,3 +7,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.tsbuildinfo
+supabase/.temp/
+npm-audit*.json
+CLIENT-READY-DEMO.txt
+FULL-CMS-LIVE-URL.txt
+LIVE-URL.txt

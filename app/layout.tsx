@@ -9,15 +9,15 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
   title: {
-    default: `${siteConfig.name} | Smart Catalogue & CMS Demo`,
+    default: `${siteConfig.name} | Computers, Laptops & Support`,
     template: `%s | ${siteConfig.name}`,
   },
   description:
-    "Advanced computer-store catalogue and CMS-ready website demonstration with product search, filters, comparison, enquiries and an admin-dashboard preview.",
+    "Browse computers, laptops, custom PCs, printers, networking products and upgrades from NextGen Computer World in Nellore.",
   openGraph: {
-    title: `${siteConfig.name} | Smart Catalogue & CMS Demo`,
+    title: `${siteConfig.name} | Computers, Laptops & Support`,
     description:
-      "Advanced computer-store catalogue built with Next.js, React, TypeScript and Tailwind CSS.",
+      "Browse products, compare specifications and contact NextGen Computer World for current availability.",
     type: "website",
   },
   robots: {
