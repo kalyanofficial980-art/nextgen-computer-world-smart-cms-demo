@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { Icon } from "@/components/icon";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { useSiteSettings } from "@/components/site-settings-provider";
+import { whatsappUrl } from "@/lib/site";
 
 export function EnquiryForm({
   title,
@@ -12,6 +13,7 @@ export function EnquiryForm({
   title: string;
   type: "repair" | "exchange" | "custom PC" | "general";
 }) {
+  const settings = useSiteSettings();
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,7 +38,7 @@ export function EnquiryForm({
     };
 
     const lines = [
-      `Hello ${siteConfig.name}, I would like to submit a ${type} enquiry.`,
+      `Hello ${settings.business_name}, I would like to submit a ${type} enquiry.`,
       `Name: ${payload.customerName}`,
       `Phone: ${payload.phone}`,
       `Budget or product: ${payload.budgetOrProduct}`,
@@ -65,7 +67,7 @@ export function EnquiryForm({
 
       setStatus("Enquiry saved. Opening WhatsApp…");
       form.reset();
-      window.open(whatsappUrl(lines.join("\n")), "_blank", "noopener,noreferrer");
+      window.open(whatsappUrl(lines.join("\n"), settings), "_blank", "noopener,noreferrer");
     } catch (error) {
       setStatus(
         error instanceof Error
@@ -169,17 +171,14 @@ export function EnquiryForm({
       <button
         type="submit"
         disabled={submitting}
-        className="focus-ring mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-400 px-5 font-black text-emerald-950 disabled:cursor-not-allowed disabled:opacity-50"
+        className="focus-ring mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl px-5 font-black text-slate-950 disabled:opacity-50"
+        style={{ backgroundColor: settings.accent_color }}
       >
         <Icon name="whatsapp" />
-        {submitting ? "Submitting…" : "Submit and continue on WhatsApp"}
+        {submitting ? "Submitting…" : "Submit and continue"}
       </button>
 
-      {status && (
-        <p className="mt-3 text-sm text-cyan-200" aria-live="polite">
-          {status}
-        </p>
-      )}
+      {status && <p className="mt-4 text-sm text-slate-400">{status}</p>}
     </form>
   );
 }

@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
+import { BrandingCms } from "@/components/branding-cms";
 import { Icon } from "@/components/icon";
 import { createClient } from "@/lib/supabase/client";
 
@@ -142,7 +143,7 @@ function storagePathFromUrl(url: string) {
 export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
-  const [tab, setTab] = useState<"products" | "enquiries">("products");
+  const [tab, setTab] = useState<"products" | "enquiries" | "branding">("products");
   const [products, setProducts] = useState<ProductRow[]>([]);
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [form, setForm] = useState<ProductForm>(blankProduct);
@@ -446,21 +447,23 @@ export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
         ))}
       </div>
 
-      <div className="mt-6 flex rounded-2xl border border-slate-700 bg-slate-950/45 p-1">
-        {(["products", "enquiries"] as const).map((value) => (
+      <div className="mt-6 grid gap-2 rounded-2xl border border-slate-700 bg-slate-950/45 p-1 md:grid-cols-3">
+        {([
+          ["products", "Product management"],
+          ["enquiries", "Enquiry management"],
+          ["branding", "Branding & homepage"],
+        ] as const).map(([value, label]) => (
           <button
             key={value}
             type="button"
             onClick={() => setTab(value)}
-            className={`min-h-11 flex-1 rounded-xl text-sm font-black ${
+            className={`min-h-11 rounded-xl text-sm font-black ${
               tab === value
                 ? "bg-cyan-300 text-slate-950"
                 : "text-slate-400"
             }`}
           >
-            {value === "products"
-              ? "Product management"
-              : "Enquiry management"}
+            {label}
           </button>
         ))}
       </div>
@@ -895,7 +898,7 @@ export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
             </div>
           </div>
         </div>
-      ) : (
+      ) : tab === "enquiries" ? (
         <div className="mt-5">
           <div className="grid gap-4">
             {enquiries.length ? (
@@ -975,6 +978,10 @@ export function AdminDashboard({ ownerEmail }: { ownerEmail: string }) {
               </div>
             )}
           </div>
+        </div>
+      ) : (
+        <div className="mt-5">
+          <BrandingCms />
         </div>
       )}
     </div>

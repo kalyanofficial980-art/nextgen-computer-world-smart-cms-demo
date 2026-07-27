@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { ProductCard } from "@/components/product-card";
 import { productRepository } from "@/lib/product-repository";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { getSiteSettings, whatsappUrl } from "@/lib/site";
 
 const services = [
   ["edit", "Laptop & desktop repair", "Diagnostics, upgrades and practical repair support."],
@@ -15,7 +15,10 @@ const services = [
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const products = await productRepository.list();
+  const [products, settings] = await Promise.all([
+    productRepository.list(),
+    getSiteSettings(),
+  ]);
   const categories = [...new Set(products.map((product) => product.category))].sort();
   const featured = products.filter((product) => product.featured).slice(0, 6);
 
@@ -24,36 +27,46 @@ export default async function HomePage() {
       <section className="grid-fade overflow-hidden px-4 py-16 sm:py-24">
         <div className="mx-auto grid max-w-[1180px] items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
           <div>
-            <span className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/7 px-3 py-2 text-xs font-black tracking-[0.13em] text-cyan-300 uppercase">
-              Computers • Laptops • Upgrades • Support
+            <span
+              className="inline-flex rounded-full border px-3 py-2 text-xs font-black tracking-[0.13em] uppercase"
+              style={{
+                borderColor: `${settings.primary_color}55`,
+                backgroundColor: `${settings.primary_color}12`,
+                color: settings.primary_color,
+              }}
+            >
+              {settings.hero_eyebrow}
             </span>
             <h1 className="mt-6 text-balance text-4xl leading-[1.02] font-black tracking-[-0.055em] text-white sm:text-6xl">
-              Technology that fits your{" "}
-              <span className="text-cyan-300">work, study and budget.</span>
+              {settings.hero_title}{" "}
+              <span style={{ color: settings.primary_color }}>
+                {settings.hero_highlight}
+              </span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-slate-400">
-              Browse current products, compare key specifications and contact us for
-              availability, recommendations, upgrades and technical support.
+              {settings.hero_description}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/catalogue"
-                className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl bg-cyan-300 px-5 font-black text-slate-950"
+                href={settings.hero_cta_href || "/catalogue"}
+                className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl px-5 font-black text-slate-950"
+                style={{ backgroundColor: settings.primary_color }}
               >
-                Browse {products.length} products
+                {settings.hero_cta_label || `Browse ${products.length} products`}
                 <Icon name="arrow" />
               </Link>
               <a
                 href={whatsappUrl(
-                  `Hello ${siteConfig.name}, I need help choosing a computer product.`,
+                  `Hello ${settings.business_name}, I need help choosing a computer product.`,
+                  settings,
                 )}
                 target="_blank"
                 rel="noreferrer"
                 className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/55 px-5 font-black text-white"
               >
                 <Icon name="whatsapp" className="size-4" />
-                Ask on WhatsApp
+                {settings.hero_secondary_label || "Ask on WhatsApp"}
               </a>
             </div>
 
@@ -71,13 +84,13 @@ export default async function HomePage() {
 
           <div className="surface overflow-hidden rounded-[2rem] p-5">
             <div className="flex justify-between text-xs text-slate-500">
-              <span>Featured system</span>
+              <span>{settings.business_name}</span>
               <span className="text-emerald-300">● Enquiries open</span>
             </div>
             <div className="relative mt-5 h-72 overflow-hidden rounded-3xl bg-slate-950">
               <Image
-                src="/products/gaming-pc.svg"
-                alt="Desktop computer system"
+                src={settings.hero_image_url || "/products/gaming-pc.svg"}
+                alt={`${settings.business_name} hero image`}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -94,7 +107,9 @@ export default async function HomePage() {
                   key={label}
                   className="rounded-2xl border border-slate-700 bg-slate-950/45 p-3"
                 >
-                  <strong className="block text-cyan-300">{value}</strong>
+                  <strong className="block" style={{ color: settings.primary_color }}>
+                    {value}
+                  </strong>
                   <span className="mt-1 block text-[10px] text-slate-500">{label}</span>
                 </div>
               ))}

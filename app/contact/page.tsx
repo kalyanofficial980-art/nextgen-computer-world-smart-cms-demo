@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { Icon } from "@/components/icon";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { getSiteSettings, whatsappUrl } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -9,7 +11,9 @@ export const metadata: Metadata = {
     "Contact NextGen Computer World for products, upgrades, repairs and technical support in Nellore.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+
   return (
     <>
       <section className="px-4 py-16 sm:py-20">
@@ -32,33 +36,33 @@ export default function ContactPage() {
 
               <div className="mt-6 grid gap-3">
                 <a
-                  href={`tel:${siteConfig.phoneLink}`}
+                  href={`tel:${settings.phone_link}`}
                   className="focus-ring flex items-start gap-3 rounded-2xl border border-slate-700 bg-slate-950/45 p-4"
                 >
                   <Icon name="phone" className="mt-0.5 size-5 text-cyan-300" />
                   <span>
                     <strong className="block text-sm text-white">Phone & WhatsApp</strong>
                     <span className="mt-1 block text-sm text-slate-500">
-                      {siteConfig.phoneDisplay}
+                      {settings.phone_display}
                     </span>
                   </span>
                 </a>
 
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={`mailto:${settings.email}`}
                   className="focus-ring flex items-start gap-3 rounded-2xl border border-slate-700 bg-slate-950/45 p-4"
                 >
                   <Icon name="mail" className="mt-0.5 size-5 text-cyan-300" />
                   <span className="min-w-0">
                     <strong className="block text-sm text-white">Email</strong>
                     <span className="mt-1 block break-all text-sm text-slate-500">
-                      {siteConfig.email}
+                      {settings.email}
                     </span>
                   </span>
                 </a>
 
                 <a
-                  href={siteConfig.mapsUrl}
+                  href={settings.maps_url}
                   target="_blank"
                   rel="noreferrer"
                   className="focus-ring flex items-start gap-3 rounded-2xl border border-slate-700 bg-slate-950/45 p-4"
@@ -67,16 +71,29 @@ export default function ContactPage() {
                   <span>
                     <strong className="block text-sm text-white">Service area</strong>
                     <span className="mt-1 block text-sm text-slate-500">
-                      {siteConfig.location}
+                      {settings.location}
                     </span>
                   </span>
                 </a>
+
+                {settings.working_hours && (
+                  <div className="flex items-start gap-3 rounded-2xl border border-slate-700 bg-slate-950/45 p-4">
+                    <Icon name="chart" className="mt-0.5 size-5 text-cyan-300" />
+                    <span>
+                      <strong className="block text-sm text-white">Working hours</strong>
+                      <span className="mt-1 block text-sm text-slate-500">
+                        {settings.working_hours}
+                      </span>
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="mt-5 flex flex-wrap gap-3">
                 <a
                   href={whatsappUrl(
-                    `Hello ${siteConfig.name}, I would like to enquire about your products or services.`,
+                    `Hello ${settings.business_name}, I would like to enquire about your products or services.`,
+                    settings,
                   )}
                   target="_blank"
                   rel="noreferrer"
@@ -87,7 +104,7 @@ export default function ContactPage() {
                 </a>
 
                 <a
-                  href={`tel:${siteConfig.phoneLink}`}
+                  href={`tel:${settings.phone_link}`}
                   className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-700 px-5 font-black text-white"
                 >
                   <Icon name="phone" />
@@ -98,11 +115,11 @@ export default function ContactPage() {
 
             <div className="surface rounded-3xl bg-[radial-gradient(circle_at_80%_15%,rgba(34,211,238,.16),transparent_35%)] p-8">
               <span className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/7 px-3 py-2 text-xs font-black tracking-[0.13em] text-cyan-300 uppercase">
-                Nellore Service Area
+                {settings.location}
               </span>
 
               <h2 className="mt-5 text-balance text-4xl font-black tracking-[-0.045em] text-white sm:text-5xl">
-                Product guidance and technical support in {siteConfig.location}.
+                Product guidance and technical support in {settings.location}.
               </h2>
 
               <p className="mt-4 text-slate-400">
@@ -110,7 +127,7 @@ export default function ContactPage() {
               </p>
 
               <a
-                href={siteConfig.mapsUrl}
+                href={settings.maps_url}
                 target="_blank"
                 rel="noreferrer"
                 className="focus-ring mt-6 inline-flex min-h-12 items-center gap-2 rounded-xl bg-cyan-300 px-5 font-black text-slate-950"

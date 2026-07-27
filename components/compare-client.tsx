@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icon";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { useSiteSettings } from "@/components/site-settings-provider";
+import { whatsappUrl } from "@/lib/site";
 import type { Product } from "@/lib/types";
 
 const fields = [
@@ -19,6 +20,7 @@ const fields = [
 
 export function CompareClient({ products }: { products: Product[] }) {
   const searchParams = useSearchParams();
+  const settings = useSiteSettings();
   const requested = (searchParams.get("ids") ?? "")
     .split(",")
     .filter(Boolean)
@@ -30,6 +32,15 @@ export function CompareClient({ products }: { products: Product[] }) {
           .map((slug) => products.find((product) => product.slug === slug))
           .filter((product): product is Product => Boolean(product))
       : products.slice(0, 3);
+
+  function enquiryUrl(product: Product) {
+    return whatsappUrl(
+      `Hello ${settings.business_name}, I compared ${selected
+        .map((item) => item.name)
+        .join(", ")}. I am interested in ${product.name}. Please confirm current price, stock and warranty.`,
+      settings,
+    );
+  }
 
   return (
     <>
@@ -62,14 +73,11 @@ export function CompareClient({ products }: { products: Product[] }) {
                 ₹{product.price.toLocaleString("en-IN")}
               </strong>
               <a
-                href={whatsappUrl(
-                  `Hello ${siteConfig.name}, I compared ${selected
-                    .map((item) => item.name)
-                    .join(", ")}. I am interested in ${product.name}. Please confirm current price, stock and warranty.`,
-                )}
+                href={enquiryUrl(product)}
                 target="_blank"
                 rel="noreferrer"
-                className="focus-ring mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-emerald-400 px-4 text-sm font-black text-emerald-950"
+                className="focus-ring mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-black text-slate-950"
+                style={{ backgroundColor: settings.accent_color }}
               >
                 <Icon name="whatsapp" className="size-4" />
                 Ask about this product
@@ -138,14 +146,11 @@ export function CompareClient({ products }: { products: Product[] }) {
               {selected.map((product) => (
                 <td key={product.slug} className="border-r border-slate-700 p-4 last:border-r-0">
                   <a
-                    href={whatsappUrl(
-                      `Hello ${siteConfig.name}, I compared ${selected
-                        .map((item) => item.name)
-                        .join(", ")}. I am interested in ${product.name}. Please confirm current price, stock and warranty.`,
-                    )}
+                    href={enquiryUrl(product)}
                     target="_blank"
                     rel="noreferrer"
-                    className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-xl bg-emerald-400 px-4 text-sm font-black text-emerald-950"
+                    className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-black text-slate-950"
+                    style={{ backgroundColor: settings.accent_color }}
                   >
                     <Icon name="whatsapp" className="size-4" />
                     WhatsApp

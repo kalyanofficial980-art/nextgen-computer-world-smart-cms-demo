@@ -41,7 +41,7 @@ textarea {
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.28);
+  background: color-mix(in srgb, var(--brand-primary) 32%, transparent);
 }
 
 .text-balance {
@@ -68,7 +68,7 @@ textarea {
 }
 
 .focus-ring:focus-visible {
-  outline: 3px solid rgba(34, 211, 238, 0.5);
+  outline: 3px solid color-mix(in srgb, var(--brand-primary) 55%, transparent);
   outline-offset: 3px;
 }
 

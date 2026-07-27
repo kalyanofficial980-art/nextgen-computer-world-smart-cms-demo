@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/site";
+import { getSiteSettings } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Terms & Product Information",
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const settings = await getSiteSettings();
+
   return (
     <section className="px-4 py-16">
       <article className="surface mx-auto max-w-3xl rounded-3xl p-6 sm:p-10">
         <h1 className="text-4xl font-black text-white">Terms and product information</h1>
         <div className="mt-6 grid gap-5 text-slate-400">
           <p>
-            Product prices, stock, specifications, condition and warranty information may change. Confirm all details with {siteConfig.name} before purchase.
+            Product prices, stock, specifications, condition and warranty information may change. Confirm all details with {settings.business_name} before purchase.
           </p>
           <p>
             Images may be representative. The exact model, accessories and physical condition should be confirmed before payment.
@@ -25,8 +29,8 @@ export default function TermsPage() {
           </p>
           <p>
             Contact us at{" "}
-            <a href={`mailto:${siteConfig.email}`} className="font-bold text-cyan-300">
-              {siteConfig.email}
+            <a href={`mailto:${settings.email}`} className="font-bold text-cyan-300">
+              {settings.email}
             </a>{" "}
             for current information.
           </p>

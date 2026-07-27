@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@/components/icon";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { useSiteSettings } from "@/components/site-settings-provider";
+import { whatsappUrl } from "@/lib/site";
 import type { Product } from "@/lib/types";
 
 function stockClass(stock: Product["stock"]) {
@@ -21,6 +22,8 @@ export function ProductCard({
   selected?: boolean;
   onCompareChange?: (slug: string, checked: boolean) => void;
 }) {
+  const settings = useSiteSettings();
+
   return (
     <article className="surface flex h-full flex-col overflow-hidden rounded-3xl">
       <div className="relative h-56 overflow-hidden bg-[#07111f]">
@@ -103,11 +106,13 @@ export function ProductCard({
             </Link>
             <a
               href={whatsappUrl(
-                `Hello ${siteConfig.name}, I am interested in ${product.name}. Please share the latest price, exact specifications, stock status and warranty.`,
+                `Hello ${settings.business_name}, I am interested in ${product.name}. Please share the latest price, exact specifications, stock status and warranty.`,
+                settings,
               )}
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-emerald-400 px-3 text-xs font-black text-emerald-950"
+              className="focus-ring inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-3 text-xs font-black text-slate-950"
+              style={{ backgroundColor: settings.accent_color }}
             >
               <Icon name="whatsapp" className="size-4" />
               WhatsApp

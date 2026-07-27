@@ -6,7 +6,7 @@ import { Icon } from "@/components/icon";
 import { ProductCard } from "@/components/product-card";
 import { productRepository } from "@/lib/product-repository";
 import { products as fallbackProducts } from "@/lib/products";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { getSiteSettings, whatsappUrl } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -29,10 +29,14 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = await productRepository.findBySlug(slug);
+  const [product, allProducts, settings] = await Promise.all([
+    productRepository.findBySlug(slug),
+    productRepository.list(),
+    getSiteSettings(),
+  ]);
+
   if (!product) notFound();
 
-  const allProducts = await productRepository.list();
   const related = allProducts
     .filter((candidate) => candidate.category === product.category && candidate.slug !== product.slug)
     .slice(0, 3);
@@ -77,7 +81,7 @@ export default async function ProductPage({
               <p className="mt-2 text-xs text-slate-500">Confirm exact configuration, availability and final price with the store.</p>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a href={whatsappUrl(`Hello ${siteConfig.name}, I am interested in ${product.name}. Please share the latest price, exact specifications, stock status and warranty.`)} target="_blank" rel="noreferrer" className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl bg-emerald-400 px-5 font-black text-emerald-950">
+              <a href={whatsappUrl(`Hello ${settings.business_name}, I am interested in ${product.name}. Please share the latest price, exact specifications, stock status and warranty.`, settings)} target="_blank" rel="noreferrer" className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl px-5 font-black text-slate-950" style={{ backgroundColor: settings.accent_color }}>
                 <Icon name="whatsapp" /> Ask Latest Price
               </a>
               <Link href={`/compare?ids=${product.slug},${compareSlug}`} className="focus-ring inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-700 px-5 font-black text-white">

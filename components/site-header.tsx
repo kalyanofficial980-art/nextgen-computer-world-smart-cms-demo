@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Icon } from "@/components/icon";
-import { siteConfig, whatsappUrl } from "@/lib/site";
+import { useSiteSettings } from "@/components/site-settings-provider";
+import { whatsappUrl } from "@/lib/site";
 
 const links = [
   ["Home", "/"],
@@ -15,17 +17,41 @@ const links = [
 ] as const;
 
 function Brand() {
+  const settings = useSiteSettings();
+
   return (
     <Link href="/" className="focus-ring flex items-center gap-3 rounded-xl">
-      <span className="grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-cyan-300 via-sky-400 to-blue-600 font-black text-slate-950">
-        NG
-      </span>
+      {settings.logo_url ? (
+        <span className="grid size-12 place-items-center overflow-hidden rounded-2xl border border-slate-700 bg-white/95 p-1.5">
+          <Image
+            src={settings.logo_url}
+            alt={`${settings.business_name} logo`}
+            width={44}
+            height={44}
+            className="h-full w-full object-contain"
+          />
+        </span>
+      ) : (
+        <span
+          className="grid size-11 place-items-center rounded-2xl font-black text-slate-950"
+          style={{
+            background: `linear-gradient(135deg, ${settings.primary_color}, ${settings.secondary_color})`,
+          }}
+        >
+          {settings.business_name
+            .split(/\s+/)
+            .map((word) => word[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase() || "NG"}
+        </span>
+      )}
       <span>
         <strong className="block text-sm leading-tight text-white">
-          {siteConfig.name}
+          {settings.business_name}
         </strong>
         <span className="mt-1 block text-[10px] text-slate-400">
-          Computers • Upgrades • Support
+          {settings.short_tagline}
         </span>
       </span>
     </Link>
@@ -34,6 +60,7 @@ function Brand() {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const settings = useSiteSettings();
   const [open, setOpen] = useState(false);
   const adminArea =
     pathname.startsWith("/admin") || pathname.startsWith("/auth");
@@ -56,6 +83,14 @@ export function SiteHeader() {
 
   return (
     <header className="glass sticky top-0 z-50 border-x-0 border-t-0">
+      {settings.announcement_enabled && settings.announcement_text && (
+        <div
+          className="px-4 py-2 text-center text-xs font-black text-slate-950"
+          style={{ backgroundColor: settings.primary_color }}
+        >
+          {settings.announcement_text}
+        </div>
+      )}
       <div className="mx-auto flex min-h-20 w-[min(calc(100%-2rem),1180px)] items-center justify-between gap-5">
         <Brand />
 
@@ -81,11 +116,13 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <a
             href={whatsappUrl(
-              `Hello ${siteConfig.name}, I would like to know more about your products and services.`,
+              `Hello ${settings.business_name}, I would like to know more about your products and services.`,
+              settings,
             )}
             target="_blank"
             rel="noreferrer"
-            className="focus-ring hidden min-h-11 items-center gap-2 rounded-xl bg-emerald-400 px-4 text-sm font-black text-emerald-950 sm:inline-flex"
+            className="focus-ring hidden min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-black text-slate-950 sm:inline-flex"
+            style={{ backgroundColor: settings.accent_color }}
           >
             <Icon name="whatsapp" className="size-4" />
             WhatsApp
