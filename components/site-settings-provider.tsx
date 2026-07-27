@@ -1,16 +1,17 @@
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
-import { fallbackSiteSettings, type SiteSettings, whatsappUrl } from "@/lib/site";
+import { createContext, useContext } from "react";
+import { fallbackSettings } from "@/lib/cms-repository";
+import type { BusinessSettings } from "@/lib/cms-types";
 
-const SiteSettingsContext = createContext<SiteSettings>(fallbackSiteSettings);
+const SiteSettingsContext = createContext<BusinessSettings>(fallbackSettings);
 
 export function SiteSettingsProvider({
   settings,
   children,
 }: {
-  settings: SiteSettings;
-  children: ReactNode;
+  settings: BusinessSettings;
+  children: React.ReactNode;
 }) {
   return (
     <SiteSettingsContext.Provider value={settings}>
@@ -21,9 +22,4 @@ export function SiteSettingsProvider({
 
 export function useSiteSettings() {
   return useContext(SiteSettingsContext);
-}
-
-export function useWhatsAppUrl(message: string) {
-  const settings = useSiteSettings();
-  return whatsappUrl(message, settings);
 }

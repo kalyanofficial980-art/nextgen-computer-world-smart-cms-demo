@@ -9,7 +9,7 @@ export async function GET() {
 
   if (!url || !key) {
     return NextResponse.json(
-      { ok: false, database: false },
+      { ok: false, database: false, advancedCms: false },
       { status: 503, headers: { "cache-control": "no-store" } },
     );
   }
@@ -22,20 +22,38 @@ export async function GET() {
     },
   });
 
-  const { count, error } = await supabase
-    .from("products")
-    .select("*", { count: "exact", head: true })
-    .eq("active", true);
+  const [products, settings, offers, reviews, media] = await Promise.all([
+    supabase
+      .from("products")
+      .select("*", { count: "exact", head: true })
+      .eq("active", true)
+      .is("deleted_at", null),
+    supabase.from("site_settings").select("id", { count: "exact", head: true }).eq("id", 1),
+    supabase.from("offers").select("id", { count: "exact", head: true }).eq("active", true),
+    supabase.from("reviews").select("id", { count: "exact", head: true }).eq("published", true),
+    supabase.from("media_items").select("id", { count: "exact", head: true }).eq("published", true),
+  ]);
+
+  const error =
+    products.error || settings.error || offers.error || reviews.error || media.error;
 
   if (error) {
     return NextResponse.json(
-      { ok: false, database: false },
+      { ok: false, database: false, advancedCms: false },
       { status: 503, headers: { "cache-control": "no-store" } },
     );
   }
 
   return NextResponse.json(
-    { ok: true, database: true, products: count ?? 0 },
+    {
+      ok: true,
+      database: true,
+      advancedCms: (settings.count ?? 0) === 1,
+      products: products.count ?? 0,
+      activeOffers: offers.count ?? 0,
+      publishedReviews: reviews.count ?? 0,
+      publishedMedia: media.count ?? 0,
+    },
     { headers: { "cache-control": "no-store" } },
   );
 }

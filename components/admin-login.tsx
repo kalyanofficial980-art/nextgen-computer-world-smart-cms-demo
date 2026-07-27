@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { siteConfig } from "@/lib/site";
+import { useSiteSettings } from "@/components/site-settings-provider";
 
 function friendlyAuthError(message: string) {
   const value = message.toLowerCase();
@@ -29,6 +29,8 @@ export function AdminLogin({
   initialMessage?: string;
 }) {
   const router = useRouter();
+  const settings = useSiteSettings();
+  const ownerEmail = process.env.NEXT_PUBLIC_OWNER_EMAIL || settings.owner_email;
   const [message, setMessage] = useState(initialMessage);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +48,7 @@ export function AdminLogin({
     const email = String(form.get("email") ?? "").trim().toLowerCase();
     const password = String(form.get("password") ?? "");
 
-    if (email !== siteConfig.ownerEmail.toLowerCase()) {
+    if (email !== ownerEmail.toLowerCase()) {
       setSubmitting(false);
       setMessage("This account is not authorised for the owner dashboard.");
       return;
@@ -80,13 +82,13 @@ export function AdminLogin({
       const supabase = createClient();
       const redirectTo = `${window.location.origin}/auth/callback?next=/admin/reset-password`;
       const { error } = await supabase.auth.resetPasswordForEmail(
-        siteConfig.ownerEmail,
+        ownerEmail,
         { redirectTo },
       );
 
       if (error) throw error;
 
-      setMessage(`Password reset instructions were sent to ${siteConfig.ownerEmail}.`);
+      setMessage(`Password reset instructions were sent to ${ownerEmail}.`);
     } catch {
       setMessage("Unable to send the reset email. Please try again later.");
     } finally {
@@ -114,7 +116,7 @@ export function AdminLogin({
           <input
             name="email"
             type="email"
-            defaultValue={siteConfig.ownerEmail}
+            defaultValue={ownerEmail}
             readOnly
             autoComplete="username"
             required
